@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace PepperTech\LaraKeycloak;
 
 use Illuminate\Support\ServiceProvider;
 

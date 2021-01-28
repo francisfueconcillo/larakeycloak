@@ -1,6 +1,6 @@
 {
     "name": "peppertech/larakeycloak",
-    "description": "Authorization implementation using KeyCloak Socialite Provider",
+    "description": "Authorization implementation using KeyCloak Socialite Provider (OpenIdConnect)",
     "type": "library",
     "require": {
         "laravel/socialite": "^5.1",
