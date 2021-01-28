@@ -1,0 +1,29 @@
+{
+    "name": "peppertech/larakeycloak",
+    "description": "Authorization implementation using KeyCloak Socialite Provider",
+    "type": "library",
+    "require": {
+        "laravel/socialite": "^5.1",
+        "socialiteproviders/keycloak": "^4.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Francis Fueconcillo",
+            "email": "francisfueconcillo@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "PepperTech\\LaraKeycloak\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "PepperTech\\LaraKeycloak\\LaraKeycloakServiceProvider"
+            ]
+        }
+    }
+}
