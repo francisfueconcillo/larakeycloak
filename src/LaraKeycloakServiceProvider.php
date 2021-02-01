@@ -3,6 +3,7 @@
 namespace PepperTech\LaraKeycloak;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Routing\Router;
 
 class LaraKeycloakServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,10 @@ class LaraKeycloakServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $router = $this->app->make(Router::class);
+        $router->pushMiddlewareToGroup('web', AuthnMiddleware::class);
+        $router->pushMiddlewareToGroup('api', AuthnMiddleware::class);
+        
+        $this->loadRoutesFrom(__DIR__.'/Routes.php');
     }
 }

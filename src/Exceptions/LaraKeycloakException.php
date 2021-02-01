@@ -1,5 +1,5 @@
 <?php
-namespace LaraKeycloak\Exceptions;
+namespace PepperTech\LaraKeycloak\Exceptions;
 
 class LaraKeycloakException extends \UnexpectedValueException
 {

@@ -1,12 +1,10 @@
 <?php
-namespace LaraKeycloak;
+namespace PepperTech\LaraKeycloak;
 
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
-use LaraKeycloak\Exceptions\ResourceAccessNotAllowedException;
-
 
 // check(), guest(), user(), id(), validate(), setUser()
 
@@ -184,6 +182,9 @@ class LaraKeycloak implements Guard
    */
   public function hasRole($resource, $role)
   {
+
+    return false;
+
     // $token_resource_access = (array)$this->decodedToken->resource_access;
     // if (array_key_exists($resource, $token_resource_access)) {
     //   $token_resource_values = (array)$token_resource_access[$resource];
@@ -193,6 +194,6 @@ class LaraKeycloak implements Guard
     //     return true;
     //   }
     // }
-    return false;
+    // return false;
   }
 }
