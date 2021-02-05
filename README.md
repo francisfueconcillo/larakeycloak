@@ -1,3 +1,25 @@
 # LaraKeycloak Package Development
 
-LaraKeycloak is an authorization implementation using [KeyCloak Socialite Provider](https://socialiteproviders.com/Keycloak/) (OpenIdConnect). It uses the Laravel's [Auth/Guard Interface](https://laravel.com/api/7.x/Illuminate/Contracts/Auth/Guard.html)
+LaraKeycloak provides Authentication and Authorization using [KeyCloak Socialite Provider](https://socialiteproviders.com/Keycloak/) (OpenIdConnect) and extending Laravel's Auth class for Authorization
+
+<!-- It uses the Laravel's [Auth/Guard Interface](https://laravel.com/api/7.x/Illuminate/Contracts/Auth/Guard.html) -->
+
+## Flow Diagram
+
+
+## Setup Overview
+
+## Keycloak Client Setup
+### Defining roles for your App
+
+## Installing and Configuring LaraKeycloak Package
+
+### Checking for Authorization
+
+
+
+## What's Next
+
+
+
+
