@@ -93,20 +93,82 @@ public function logout()
 }
 ```
 
+### Socialite Keycloak Settings
+Reference: https://socialiteproviders.com/Keycloak/#installation-basic-usage
+
+- Add the following block in your `config/services.php`
+```
+'keycloak' => [    
+        'client_id' => env('KEYCLOAK_CLIENT_ID'),  
+        'client_secret' => env('KEYCLOAK_CLIENT_SECRET'),  
+        'redirect' => env('KEYCLOAK_REDIRECT_URI'),
+        'base_url' => env('KEYCLOAK_BASE_URL'),
+        'realms' => env('KEYCLOAK_REALMS'),
+        'realm_public_key' => env('KEYCLOAK_REALM_PUBLIC_KEY'),
+    ],
+```
+
+- In `app/Providers/EventServiceProvider.php`, add the following:
+```
+use SocialiteProviders\Manager\SocialiteWasCalled;
+
+protected $listen = [
+        ....
+        SocialiteWasCalled::class => [
+            // add your listeners (aka providers) here
+            'SocialiteProviders\\Keycloak\\KeycloakExtendSocialite@handle',
+        ],
+    ];
+```
+
+- In `config/app.php` add the `SocialiteProviders\Manager\ServiceProvider::class` and comment-out `Laravel\Socialite\SocialiteServiceProvider::class` if you have added this before.
+```
+'providers' => [
+    ...
+    // Laravel\Socialite\SocialiteServiceProvider::class,   
+    SocialiteProviders\Manager\ServiceProvider::class,
+]
+```
 ### Auth Middleware
+- In `app/Http/Middleware/Authenticate.php`, change the `redirectTo` method. This change will make the redirection to Keycloak Login when an unauthenticated user access a protect part of the website.
+```
+protected function redirectTo($request)
+{
+    if (! Auth::check()) {
+        return route('auth-redirect');
+    }   
+}
+```
 
-
-### Gates
-
-
-
-###
 <a name="authz"></a>
 ## Authorization
+Authorization is provided by roles of user from Keycloak. `PepperTech\LaraKeycloak\LaraKeycloak` class has a public method `hasRole` that checks if currently logged-in user has that role. `hasRole` can be used with [Laravel Authorization](https://laravel.com/docs/7.x/authorization)
+
+### Defining Gates
+- Define your Gate in `app/Providers/AuthServiceProvider.php` `boot` method
+```
+public function boot()
+    {
+        $this->registerPolicies();
+
+        Gate::define('view-admin', [SampleAdminPolicy::class, 'view']);
+        // define more Gates here
+    }
+```
+### Policies
+- An example Policy is provided in `app/Policies/SampleAdminPolicy.php` that uses the LaraKeycloak `hasRole` method.
+- An example Admin View Controller is also provided at `app/Htttp/Controllers/SampleAdminController.php`. Inspect how Gates are used here to check the user's authorization in viewing a page.
 
 
 <a name="testing"></a>
 ## Testing
+- To test if everything is working, navigate to `http://[your domain]/sample/admin`. This should redirct to Keycloak Login Page.
+- Login with a Keycloak User that has 'admin' role.
+- Upon login, you should be able to see the Sample Admin Page.
+- Logout and go to `http://[your domain]/sample/admin` again. This time, login with a user that does not have an `admin` role. 
+- Upon login, you should see a 403 Unauthorized Page. 
+
+
 
 
 
